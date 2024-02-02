@@ -9,13 +9,13 @@ const app = express();
 
 app.options("*", cors());
 
-app.use(cors());
-
-// {
-//   origin: REACT_URL,
-//   methods: ["POST", "GET", "PUT", "DELETE", "UPDATE"],
-//   credentials: true,
-// }
+app.use(
+  cors({
+    origin: REACT_URL,
+    methods: ["POST", "GET", "PUT", "DELETE", "UPDATE"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
@@ -32,18 +32,18 @@ mongoose
     console.error("Error connecting to MongoDB", err);
   });
 
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  res.header(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, OPTIONS, UPDATE"
-  );
-  next();
-});
+// app.use((req, res, next) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   res.header(
+//     "Access-Control-Allow-Methods",
+//     "GET, POST, PUT, DELETE, OPTIONS, UPDATE"
+//   );
+//   next();
+// });
 
 app.use("/api/v1", require("./src/v1/routes"));
 
