@@ -9,15 +9,16 @@ const app = express();
 
 app.options("*", cors());
 
-app.use(
-  cors({
-    origin: REACT_URL,
-    methods: ["POST", "GET", "PUT", "DELETE", "UPDATE"],
-    credentials: true,
-  })
-);
+app.use(cors());
+
+// {
+//   origin: REACT_URL,
+//   methods: ["POST", "GET", "PUT", "DELETE", "UPDATE"],
+//   credentials: true,
+// }
 
 app.use(express.json());
+
 app.use("/api/v1", require("./src/v1/routes"));
 
 // Connect to MongoDB
