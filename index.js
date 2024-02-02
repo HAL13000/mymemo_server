@@ -19,6 +19,19 @@ app.use(cors());
 
 app.use(express.json());
 
+// Connect to MongoDB
+mongoose
+  .connect(process.env.MONGODB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to MongoDB");
+  })
+  .catch((err) => {
+    console.error("Error connecting to MongoDB", err);
+  });
+
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -33,14 +46,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/v1", require("./src/v1/routes"));
-
-// Connect to MongoDB
-try {
-  mongoose.connect(process.env.MONGODB_URL);
-  console.log("db connected");
-} catch (err) {
-  console.log(err);
-}
 
 app.listen(PORT, () => {
   console.log("local server is running");
